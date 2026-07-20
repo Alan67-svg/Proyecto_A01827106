@@ -1,4 +1,3 @@
-//GEnera la implementación de la clase base Personaje
 #include "Personaje.hpp"
 #include <iostream>
 #include <cstdlib>
@@ -18,6 +17,11 @@ Personaje::Personaje(int vidaMax, int ataqueBase, int nivelInicial) {
     salud = vidaMax;
     ataque = ataqueBase;
     nivel = nivelInicial;
+}
+
+Personaje::~Personaje() {
+    // No hay recursos dinámicos que liberar aquí, pero se define para
+    // que las clases derivadas se destruyan correctamente vía Personaje*.
 }
 
 // ---------- Getters ----------
@@ -118,4 +122,13 @@ void Personaje::imprimir() {
     std::cout << "Barra de vida: ";
     imprimeBarra();
     std::cout << "----------------------------" << std::endl;
+}
+
+// ---------- Operador sobrecargado ----------
+
+std::ostream& operator<<(std::ostream& os, Personaje& personaje) {
+    // Como imprimir() es virtual, aquí se ejecuta la versión de la
+    // clase real del objeto (Guerrero, Arquero o Mago), no la de Personaje.
+    personaje.imprimir();
+    return os;
 }

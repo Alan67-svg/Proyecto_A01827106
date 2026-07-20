@@ -49,6 +49,30 @@ void Arquero::recibeAtaque(int ptosAtaque) {
 
     // Reutiliza el recibeAtaque de la clase base con el daño ya ajustado
     Personaje::recibeAtaque(ptosAtaque);
+
+    // Si el golpe lo dejó en 0 de salud, intenta revivir gracias a su precisión
+    if (getSalud() <= 0) {
+        revive();
+    }
+}
+
+void Arquero::revive() {
+    if (getSalud() > 0) return; // sólo aplica si de verdad quedó en 0
+
+    const double PRECISION_MINIMA = 30.0; // precisión necesaria para revivir
+    const double COSTO_PRECISION = 30.0;  // cuánta precisión consume revivir
+
+    if (precision >= PRECISION_MINIMA) {
+        int vidaRevivir = getVida() / 5; // revive con el 20% de su vida máxima
+        setSalud(vidaRevivir);
+        precision -= COSTO_PRECISION; // se debilita, así no revive infinitamente
+
+        std::cout << "Revivio el personaje debido a la precision. "
+                  << "Precision restante: " << precision << std::endl;
+    } else {
+        setSalud(0);
+        std::cout << "El Arquero perdio su precision y murio." << std::endl;
+    }
 }
 
 void Arquero::imprimir() {

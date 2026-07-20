@@ -17,9 +17,12 @@ public:
     int getMana() const;
     void setMana(int mana);
 
-    // Métodos sobreescritos
-    int calculaAtaque(Personaje& objetivo);
-    void recibeAtaque(int ptosAtaque);
-    void atacar(Personaje& objetivo);
-    void imprimir();
+    // Métodos sobreescritos (polimorfismo en tiempo de ejecución)
+    int calculaAtaque(Personaje& objetivo) override;
+    void recibeAtaque(int ptosAtaque) override;
+    void atacar(Personaje& objetivo) override;
+    void imprimir() override;
+
+    // Implementación de revive() usando el maná como "última oportunidad"
+    void revive() override;
 };

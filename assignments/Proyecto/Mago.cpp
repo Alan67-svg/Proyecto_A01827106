@@ -63,6 +63,30 @@ void Mago::recibeAtaque(int ptosAtaque) {
 
     // Reutiliza el recibeAtaque de la clase base con el daño ya ajustado
     Personaje::recibeAtaque(danioFinal);
+
+    // Si el golpe lo dejó en 0 de salud, intenta revivir gracias a su maná
+    if (getSalud() <= 0) {
+        revive();
+    }
+}
+
+void Mago::revive() {
+    if (getSalud() > 0) return; // sólo aplica si de verdad quedó en 0
+
+    const int MANA_MINIMO = 30; // maná necesario para la última oportunidad
+    const int COSTO_MANA_REVIVIR = 30; // cuánto maná consume revivir
+
+    if (mana >= MANA_MINIMO) {
+        int vidaRevivir = getVida() / 4; // revive con el 25% de su vida máxima
+        setSalud(vidaRevivir);
+        mana -= COSTO_MANA_REVIVIR; // se debilita, así no revive infinitamente
+
+        std::cout << "Revivio el personaje debido al mana. "
+                  << "Mana restante: " << mana << std::endl;
+    } else {
+        setSalud(0);
+        std::cout << "El Mago se quedo sin mana y murio." << std::endl;
+    }
 }
 
 void Mago::atacar(Personaje& objetivo) {

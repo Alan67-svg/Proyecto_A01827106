@@ -16,8 +16,11 @@ public:
     double getPrecision() const;
     void setPrecision(double precision);
 
-    // Métodos sobreescritos
-    int calculaAtaque(Personaje& objetivo);
-    void recibeAtaque(int ptosAtaque);
-    void imprimir();
+    // Métodos sobreescritos (polimorfismo en tiempo de ejecución)
+    int calculaAtaque(Personaje& objetivo) override;
+    void recibeAtaque(int ptosAtaque) override;
+    void imprimir() override;
+
+    // Implementación de revive() usando la precisión como "última oportunidad"
+    void revive() override;
 };

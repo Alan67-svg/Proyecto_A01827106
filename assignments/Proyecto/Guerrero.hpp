@@ -16,8 +16,11 @@ public:
     int getFuerza() const;
     void setFuerza(int fuerza);
 
-    // Métodos sobreescritos
-    int calculaAtaque(Personaje& objetivo);
-    void recibeAtaque(int ptosAtaque);
-    void imprimir();
+    // Métodos sobreescritos (polimorfismo en tiempo de ejecución)
+    int calculaAtaque(Personaje& objetivo) override;
+    void recibeAtaque(int ptosAtaque) override;
+    void imprimir() override;
+
+    // Implementación de revive() usando la fuerza como "última oportunidad"
+    void revive() override;
 };
